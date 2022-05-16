@@ -57,3 +57,28 @@ SearchTree Insert(ElemType x,SearchTree T){
     return T;
 }
 
+SearchTree Delete(ElemType x,SearchTree T){
+    TNode node;
+    if(T==NULL){
+        return NULL;
+    }else if(x>T->Elem){
+        Delete(x,T->R_child);
+    }else if(x<T->Elem){
+        Delete(x,T->L_child);
+    }else{
+        if(T->R_child&&T->L_child){
+            node= FindMin(T->R_child);
+            T->Elem=node->Elem;
+            Delete(node->Elem,T->R_child);
+        }else{
+            node=T;
+            if(T->R_child==NULL){
+                T=T->L_child;
+            }else if(T->L_child==NULL){
+                T=T->R_child;
+            }
+            free(node);
+        }
+    }
+    return T;
+}
